@@ -67,17 +67,24 @@ function MessageItem({ m }: { m: Message }) {
  *                       컴포넌트
  * ======================================================= */
 export default function ChatPanel({ onTimelineChange }: ChatPanelProps) {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: 1,
-      role: "assistant",
-      content:
-        "안녕하세요! 😊 여행 일정을 도와드릴게요.\n예: '경주 2박 3일, 친구들이랑, 역사 테마, 예산 50만원, 여름, 해산물 알레르기' 처럼 입력해 주세요.",
-      createdAt: Date.now(),
-    },
-  ]);
+  // ✅ 1) 초기값을 빈 배열로
+  const [messages, setMessages] = useState<Message[]>([]);
+
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+
+  // ✅ 2) 이 위치에 useEffect 추가 (컴포넌트 "안")
+  useEffect(() => {
+    setMessages([
+      {
+        id: 1,
+        role: "assistant",
+        content:
+          "안녕하세요! 😊 여행 일정을 도와드릴게요.\n예: '경주 2박 3일, 친구들이랑, 역사 테마, 예산 50만원, 여름, 해산물 알레르기' 처럼 입력해 주세요.",
+        createdAt: Date.now(),
+      },
+    ]);
+  }, []);
 
   // 하루별 앵커 좌표(이전 장소 기준으로 동선 최소화)
   const dayAnchors = useRef<Record<number, { x: number; y: number } | null>>({});
