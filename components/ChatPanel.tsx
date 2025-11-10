@@ -81,7 +81,7 @@ export default function ChatPanel({ onTimelineChange }: ChatPanelProps) {
         id: 1,
         role: "assistant",
         content:
-          "안녕하세요! 😊 여행 일정을 도와드릴게요.\n예: '경주 2박 3일, 친구들이랑, 역사 테마, 예산 50만원, 여름, 해산물 알레르기' 처럼 입력해 주세요.",
+          "안녕하세요! 😊 여행 일정을 도와드릴게요.\n예: '청주 2박 3일, 친구들이랑, 미식 테마, 예산 50만원, 여름, 해산물 알레르기' 처럼 입력해 주세요.",
         createdAt: Date.now(),
       },
     ]);
