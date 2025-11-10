@@ -28,7 +28,8 @@ type ChatPanelProps = {
 
 /* ---------- 유틸 ---------- */
 const fmtTime = (ts?: number) => {
-  const d = ts ? new Date(ts) : new Date();
+  if (!ts) return "";
+  const d = new Date(ts);
   const hh = String(d.getHours()).padStart(2, "0");
   const mm = String(d.getMinutes()).padStart(2, "0");
   return `${hh}:${mm}`;
