@@ -1,0 +1,28 @@
+.wrap {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: var(--prioritybar-bg, #f7f7f8);
+  border: 1px solid rgba(0,0,0,0.06);
+  /* 채팅창 바로 위 작은 바 처럼 보이도록 그림자 살짝 */
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+
+.btn {
+  appearance: none;
+  border: 1px solid rgba(0,0,0,0.1);
+  background: white;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 13px;
+  line-height: 1;
+  cursor: default; /* 실행 안 함(클릭 효과 없음) */
+  user-select: none;
+  transition: transform 0.04s ease;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}

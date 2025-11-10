@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <title>Naver Map Test</title>
+    <style>
+      #map {
+        width: 100%;
+        height: 400px;
+      }
+    </style>
+    <!-- 👉 여기 YOUR_PARAM / YOUR_VALUE 부분만 바꿔봐 -->
+    <script src="https://openapi.map.naver.com/openapi/v3/maps.js?YOUR_PARAM=YOUR_VALUE"></script>
+  </head>
+  <body>
+    <h1>지도 테스트</h1>
+    <div id="map"></div>
+    <script>
+      const map = new naver.maps.Map("map", {
+        center: new naver.maps.LatLng(37.5665, 126.978),
+        zoom: 10,
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,138 @@
+/* components/ChatPanel.module.css */
+
+/* ===== 레이아웃 ===== */
+.chatWrap {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  height: 100%;
+  min-height: 520px;
+  background: #f8fafc;
+  border-left: 1px solid #e5e7eb;
+}
+
+/* ===== 메시지 리스트 ===== */
+.list {
+  overflow: auto;
+  padding: 14px 14px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ===== 아이템 공통 ===== */
+.item {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  max-width: 92%;
+}
+
+.left { justify-content: flex-start; }
+.right { justify-content: flex-end; margin-left: auto; }
+
+/* ===== 아바타 ===== */
+.avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 9999px;
+  background: #e2e8f0;
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+  user-select: none;
+}
+
+/* ===== 말풍선 ===== */
+.bubble {
+  padding: 10px 12px;
+  border-radius: 14px;
+  line-height: 1.45;
+  font-size: 14px;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.04);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.bot {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  color: #0f172a;
+  border-bottom-left-radius: 4px; /* 꼬리 느낌 */
+}
+
+.user {
+  background: #2563eb;
+  color: #ffffff;
+  border-bottom-right-radius: 4px; /* 꼬리 느낌 */
+}
+
+/* (선택) 시스템/안내 풍선 */
+.system {
+  background: #eef2ff;
+  color: #1e3a8a;
+  border: 1px solid #c7d2fe;
+}
+
+/* 풍선 하단 정보(시간 등) */
+.meta {
+  font-size: 11px;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+/* ===== 입력영역 (겹침 해결 버전) ===== */
+.inputBar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  border-top: 1px solid #e5e7eb;
+  background: #ffffff;
+}
+
+/* 입력창 */
+.textarea {
+  flex: 1;                  /* 남는 공간을 전부 차지 → 버튼과 절대 겹치지 않음 */
+  min-height: 44px;
+  max-height: 160px;
+  resize: none;
+  padding: 10px 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
+  outline: none;
+  font-size: 14px;
+  line-height: 1.4;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+/* 전송 버튼 */
+.sendBtn {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;           /* 버튼이 줄어들지 않게 고정 */
+  border: none;
+  border-radius: 50%;
+  background: #135dff;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+.sendBtn:hover:not(:disabled) {
+  background: #a0b9ff;
+  transform: scale(1.05);
+}
+.sendBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* 풍선 내부 문단/목록 간격 정리 */
+.bubble :where(p + p, ul, ol) { margin-top: 6px; }
