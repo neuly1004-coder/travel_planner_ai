@@ -85,7 +85,7 @@ export default function HomePage() {
     e.stopPropagation();
     if (!confirm(`"${entry.name}" 일정을 삭제할까요?`)) return;
     const current = loadJSON<SavedItinerary[]>(STORAGE_KEY_COLLECTION, []);
-    const next = current.filter(v => v.id !== entry.id);
+    const next = current.filter((v) => v.id !== entry.id);
     saveJSON(STORAGE_KEY_COLLECTION, next);
     setVault(next);
   };
@@ -104,10 +104,12 @@ export default function HomePage() {
 
   return (
     <div className="app-layout">
+      {/* 지도 패널 */}
       <section className="map-panel card">
         <NaverMap items={timelineItems} selectedDay={selectedDay} />
       </section>
 
+      {/* 타임라인 패널 */}
       <section className="timeline-panel card">
         <Timeline
           items={timelineItems}
@@ -116,29 +118,19 @@ export default function HomePage() {
         />
       </section>
 
-      <section
-        className="chat-panel card"
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: 8,
-          minHeight: 0,
-        }}
-      >
-        {/* ====== 우선순위 버튼 바 ====== */}
+      {/* 채팅 패널 */}
+      <section className="chat-panel card">
+        {/* 우선순위 버튼 바 */}
         <div
           aria-label="우선순위 정렬 버튼 영역"
+          className="priority-bar"
           style={{
             display: "flex",
             gap: 8,
             alignItems: "center",
-            padding: "8px 10px",
-            borderRadius: 10,
-            background: "var(--prioritybar-bg, #f7f7f8)",
-            border: "1px solid rgba(0,0,0,0.06)",
-            boxShadow: "0 1px 2px rgba(0,0,0,0.04)",
           }}
         >
+
           {["거리순", "테마순", "낮은 가격순", "높은 가격순"].map((label) => (
             <button
               key={label}
@@ -148,7 +140,7 @@ export default function HomePage() {
               onClick={(e) => e.preventDefault()}
               style={{
                 appearance: "none",
-                border: "1px solid rgba(0,0,0,0.1)",
+                border: "1px solid rgba(0, 0, 0, 0.1)",
                 background: "#fff",
                 borderRadius: 999,
                 padding: "6px 14px",
@@ -156,7 +148,7 @@ export default function HomePage() {
                 lineHeight: 1,
                 cursor: "default",
                 userSelect: "none",
-                whiteSpace: "nowrap", // ✅ 줄바꿈 방지 추가
+                whiteSpace: "nowrap",
               }}
             >
               {label}
@@ -164,11 +156,12 @@ export default function HomePage() {
           ))}
         </div>
 
-        <div style={{ flex: 1, minHeight: 0 }}>
-          <ChatPanel onTimelineChange={setTimelineItems} />
-        </div>
+        {/* ChatPanel 전체를 그냥 아래에 붙여서,
+            내부에 있는 입력창까지 모두 보이게 한다 */}
+        <ChatPanel onTimelineChange={setTimelineItems} />
       </section>
 
+      {/* 메뉴 버튼 */}
       <button
         aria-label="메뉴 열기"
         onClick={openDrawer}
@@ -180,9 +173,9 @@ export default function HomePage() {
           width: 44,
           height: 44,
           borderRadius: "50%",
-          border: "1px solid rgba(0,0,0,0.12)",
+          border: "1px solid rgba(0, 0, 0, 0.12)",
           background: "#fff",
-          boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+          boxShadow: "0 4px 12px rgba(0, 0, 0, 0.08)",
           cursor: "pointer",
           fontSize: 20,
           lineHeight: "44px",
@@ -194,18 +187,20 @@ export default function HomePage() {
         ☰
       </button>
 
+      {/* 오버레이 */}
       {isDrawerOpen && (
         <div
           onClick={() => setDrawerOpen(false)}
           style={{
             position: "fixed",
             inset: 0,
-            background: "rgba(0,0,0,0.35)",
+            background: "rgba(0, 0, 0, 0.35)",
             zIndex: 55,
           }}
         />
       )}
 
+      {/* 사이드바 */}
       <div
         role="complementary"
         aria-label="사이드바 메뉴"
@@ -217,7 +212,7 @@ export default function HomePage() {
           width: "min(360px, 88vw)",
           background: "#fff",
           borderRight: "1px solid #eee",
-          boxShadow: isDrawerOpen ? "8px 0 24px rgba(0,0,0,0.12)" : "none",
+          boxShadow: isDrawerOpen ? "8px 0 24px rgba(0, 0, 0, 0.12)" : "none",
           transform: `translateX(${isDrawerOpen ? "0" : "-100%"})`,
           transition: "transform 200ms ease",
           zIndex: 60,
@@ -246,7 +241,7 @@ export default function HomePage() {
                   height: 32,
                   padding: "0 10px",
                   borderRadius: 8,
-                  border: "1px solid rgba(0,0,0,0.1)",
+                  border: "1px solid rgba(0, 0, 0, 0.1)",
                   background: "#fff",
                   cursor: "pointer",
                   fontSize: 12,
@@ -262,7 +257,7 @@ export default function HomePage() {
                 height: 32,
                 width: 32,
                 borderRadius: 8,
-                border: "1px solid rgba(0,0,0,0.1)",
+                border: "1px solid rgba(0, 0, 0, 0.1)",
                 background: "#fff",
                 cursor: "pointer",
                 fontSize: 14,
@@ -338,7 +333,7 @@ export default function HomePage() {
                     height: 32,
                     padding: "0 10px",
                     borderRadius: 8,
-                    border: "1px solid rgba(0,0,0,0.1)",
+                    border: "1px solid rgba(0, 0, 0, 0.1)",
                     background: "#fff",
                     cursor: "pointer",
                     fontSize: 12,
@@ -392,7 +387,7 @@ export default function HomePage() {
                             height: 28,
                             padding: "0 10px",
                             borderRadius: 6,
-                            border: "1px solid rgba(0,0,0,0.1)",
+                            border: "1px solid rgba(0, 0, 0, 0.1)",
                             background: "#fff",
                             cursor: "pointer",
                             fontSize: 12,

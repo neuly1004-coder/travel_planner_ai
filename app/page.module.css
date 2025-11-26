@@ -139,3 +139,67 @@ a.secondary {
     --button-secondary-border: #1a1a1a;
   }
 }
+/* app/page.module.css */
+
+.layout {
+  display: grid;
+  grid-template-columns: 1.2fr 1.8fr 1.2fr; /* 타임라인:지도:챗봇 비율 */
+  gap: 12px;
+  padding: 12px;
+  box-sizing: border-box;
+  height: 100vh;
+}
+
+/* 공통 카드 영역 스타일 */
+.timelineSection,
+.mapSection,
+.chatSection {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  min-height: 0;
+}
+
+.timelineSection,
+.chatSection {
+  display: flex;
+  flex-direction: column;
+}
+
+.timelineSection > *,
+.chatSection > * {
+  flex: 1;
+  min-height: 0;
+}
+
+.mapSection {
+  display: flex;
+}
+
+.mapSection > * {
+  flex: 1;
+  min-height: 0;
+}
+
+/* ========================= */
+/*      모바일 / 태블릿      */
+/* ========================= */
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;  /* 한 줄로 */
+    grid-template-rows: auto auto auto;
+    height: auto;                /* 세로 스크롤 허용 */
+  }
+
+  .timelineSection,
+  .mapSection,
+  .chatSection {
+    height: auto;
+  }
+
+  .mapSection {
+    height: 50vh; /* 모바일에서 지도는 화면 절반 정도 */
+  }
+}

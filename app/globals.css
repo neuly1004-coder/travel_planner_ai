@@ -1,98 +1,26 @@
-/* 전체 배경 & 기본 설정 */
+/* =========================
+   기본 리셋 / 배경
+========================= */
+* {
+  box-sizing: border-box;
+}
+
+html,
 body {
   margin: 0;
   padding: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
-  background: radial-gradient(circle at top left, #c3d4ff, #6dbdff);
-}
-
-/* 메인 레이아웃: 왼쪽(지도+타임라인) / 오른쪽(챗봇) */
-.app-layout {
-  height: 100vh;
-  box-sizing: border-box;
-  padding: 24px;
-  display: grid;
-  grid-template-columns: 2fr 1.1fr; /* 왼쪽이 조금 더 넓게 */
-  grid-template-rows: 1.3fr 1fr; /* 위에 지도, 아래 타임라인 */
-  grid-template-areas:
-    "map chat"
-    "timeline chat";
-  gap: 24px;
-}
-
-/* 공통 카드 스타일 (둥글둥글 + 그림자) */
-.card {
-  background: linear-gradient(135deg, #f7f8ff, #ffffff);
-  border-radius: 28px;
-  box-shadow: 0 18px 40px rgba(52, 61, 255, 0.18);
-  padding: 20px 24px;
-  box-sizing: border-box;
-}
-
-/* 영역별 위치 지정 */
-.map-panel {
-  grid-area: map;
-  display: flex;
-  flex-direction: column;
-}
-
-.timeline-panel {
-  grid-area: timeline;
-  display: flex;
-  flex-direction: column;
-}
-
-.timeline-container {
-    max-height: 400px; /* 원하는 최대 높이 */
-    overflow-y: auto; /* 스크롤 가능하게 설정 */
-}
-
-.chat-panel {
-  grid-area: chat;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden; /* 내부에서만 스크롤 */
-}
-
-/* 챗봇 안에서 스크롤 되는 영역이 있다면 이런 클래스 써줘도 좋음
-   (ChatPanel 안에서 사용) */
-.chat-messages {
-  flex: 1;
-  overflow-y: auto;
-  padding-right: 8px;
-}
-
-/* 맵이 부모 영역을 꽉 채우도록 */
-.map-panel > div,
-.map-panel .map-container {
-  width: 100%;
   height: 100%;
 }
-/* ===== 기본 배경 ===== */
+
 body {
-  margin: 0;
-  padding: 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
   background: radial-gradient(circle at top left, #c3d4ff, #72c0ff);
 }
 
-/* ===== 메인 레이아웃: 왼쪽(지도+타임라인) / 오른쪽(챗봇) ===== */
-.app-layout {
-  height: 100vh;
-  box-sizing: border-box;
-  padding: 24px;
-  display: grid;
-  grid-template-columns: 2fr 1.1fr; /* 왼쪽이 조금 더 넓게 */
-  grid-template-rows: 1.4fr 1fr;   /* 위: 지도, 아래: 타임라인 */
-  grid-template-areas:
-    "map chat"
-    "timeline chat";
-  gap: 24px;
-}
-
-/* 공통 카드 스타일 */
+/* =========================
+   공통 카드 스타일
+========================= */
 .card {
   background: linear-gradient(135deg, #f7f8ff, #ffffff);
   border-radius: 28px;
@@ -101,26 +29,63 @@ body {
   box-sizing: border-box;
 }
 
-/* 영역 배치 */
+/* =========================
+   PC 레이아웃
+   - 왼쪽 : 위(지도) / 아래(타임라인)
+   - 오른쪽 : 챗봇 전체
+   - 전체 화면 고정 (100vh)
+========================= */
+
+.app-layout {
+  display: grid;
+  /* 🔥 오른쪽 칼럼을 더 넓게 */
+  grid-template-columns: minmax(0, 1.9fr) minmax(0, 1.1fr);
+  grid-template-rows: minmax(0, 0.58fr) minmax(0, 0.42fr);
+  grid-template-areas:
+    "map chat"
+    "timeline chat";
+  gap: 16px;
+  padding: 16px 20px 16px 16px; /* 오른쪽 여백 살짝만 */
+  height: 100vh;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* 패널 공통 구조 (카드 스타일 + 레이아웃용) */
+
 .map-panel {
   grid-area: map;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
 .timeline-panel {
   grid-area: timeline;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  min-height: 0;
+  overflow-y: auto;    /* 🔥 일정 많으면 이 패널 안에서만 스크롤 */
 }
 
 .chat-panel {
   grid-area: chat;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  min-height: 0;
 }
 
-/* ===== 타임라인 스타일 ===== */
+/* 패널 안쪽 요소들이 패널 높이에 맞게 채워지도록 */
+.map-panel > *,
+.timeline-panel > *,
+.chat-panel > * {
+  flex: 1;
+  min-height: 0;
+}
+
+/* =========================
+   타임라인 기본 스타일
+========================= */
 
 .timeline-empty {
   font-size: 14px;
@@ -169,192 +134,8 @@ body {
   color: #96c2ff;
 }
 
-/* 기존 .timeline-panel의 overflow 속성 변경 */
-.timeline-panel {
-  grid-area: timeline;
-  display: flex;
-  flex-direction: column;
-  overflow: auto;  /* 기존 overflow: hidden을 auto로 변경 */
-}
-
-/* 기존 .timeline-container에서 max-height 및 overflow 설정 */
-.timeline-container {
-  max-height: 400px;  /* 원하는 최대 높이 */
-  overflow-y: auto;    /* 스크롤 가능하게 설정 */
-}
-
-/* 기존 .timeline-list에서 overflow 설정 */
-.timeline-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  max-height: 100%;
-  overflow-y: auto;   /* 스크롤 가능하게 설정 */
-  padding-right: 6px;
-}
-
-/* 챗봇 안에서 메시지 스크롤 영역에 쓰면 좋은 클래스 (원하면 ChatPanel에 적용) */
-.chat-messages {
-  flex: 1;
-  overflow-y: auto;
-  padding-right: 8px;
-}
-
-.priority-bar {
-  display:flex; gap:8px; flex-wrap:wrap; margin: 0 4px 8px;
-}
-.pill {
-  border:1px solid #e2e6ff; background:#fff; border-radius:999px;
-  padding:6px 12px; font-size:13px; color:#4b5563; cursor:pointer; transition:all .15s ease;
-}
-.pill:hover { box-shadow:0 1px 4px rgba(0,0,0,.08); }
-.pill.active { background:#5B8DEF; color:#fff; border-color:#5B8DEF; }
-
-/* Chat shell */
-.chat-panel {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  background: #f6f7ff;
-  border-radius: 16px;
-  padding: 12px;
-  box-shadow: inset 0 0 8px rgba(0,0,0,0.04);
-}
-
-.chat-header {
-  font-weight: 700;
-  font-size: 18px;
-  margin: 4px 4px 8px;
-}
-
-/* Priority buttons */
-.priority-bar {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin: 0 4px 8px;
-}
-.pill {
-  border: 1px solid #e2e6ff;
-  background: #fff;
-  border-radius: 999px;
-  padding: 6px 12px;
-  font-size: 13px;
-  color: #4b5563;
-  cursor: pointer;
-  transition: all .15s ease;
-}
-.pill:hover { box-shadow: 0 1px 4px rgba(0,0,0,.08); }
-.pill.active { background: #5B8DEF; color: #fff; border-color: #5B8DEF; }
-
-/* Messages (bubbles) */
-.chat-messages {
-  flex: 1;
-  overflow-y: auto;
-  padding: 8px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.bubble {
-  max-width: 80%;
-  padding: 10px 12px;
-  border-radius: 16px;
-  line-height: 1.45;
-  font-size: 14px;
-  white-space: pre-wrap;
-  box-shadow: 0 2px 6px rgba(0,0,0,.06);
-}
-.bubble.left {
-  background: #ffffff;
-  color: #1f2937;
-  align-self: flex-start;
-  border-bottom-left-radius: 6px;
-}
-.bubble.right {
-  background: #5B8DEF;
-  color: #fff;
-  align-self: flex-end;
-  border-bottom-right-radius: 6px;
-}
-.bubble.muted { color:#6b7280; background:#fff; }
-
-/* Input */
-.chat-input-container {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: #fff;
-  border-radius: 999px;
-  padding: 6px 8px 6px 12px;
-  margin-top: 6px;
-  box-shadow: 0 2px 8px rgba(0,0,0,.08);
-}
-.chat-input {
-  flex: 1;
-  border: none;
-  outline: none;
-  font-size: 14px;
-  background: transparent;
-  padding: 8px 6px;
-}
-.send-btn {
-  border: none;
-  background: #5B8DEF;
-  color: #fff;
-  border-radius: 999px;
-  width: 36px;
-  height: 36px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: .15s ease;
-}
-.send-btn:disabled { background:#cbd5e1; cursor: default; }
-.send-btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 6px 12px rgba(91,141,239,.35); }
-
-/* === Emoji Marker 기본 스타일 === */
-.emoji-pin {
-  width: 36px;            /* 기본 마커 크기 */
-  height: 36px;
-  border-radius: 50%;
-  background: #ffffff;
-  border: 2px solid #33333322;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-  display: grid;
-  place-items: center;
-  font-size: 20px;        /* 이모지 크기 */
-  line-height: 1;
-  user-select: none;
-  transform: translate(-50%, -100%); /* 기준점: 아래 중앙 */
-}
-
-.emoji-pin:hover {
-  transform: translate(-50%, -100%) scale(1.06);
-}
-
-/* === 지도 툴팁 === */
-.map-tooltip {
-  font-size: 12px;
-  line-height: 1.4;
-  padding: 6px 8px;
-  color: #111827;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 6px;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
-  max-width: 240px;
-  white-space: pre-wrap;
-}
-.map-tooltip .title {
-  font-weight: 600;
-  margin-bottom: 2px;
-}
-.map-tooltip .addr {
-  color: #4b5563;
-}
-
 /* ==== New Timeline UI (tl-*) ================================================= */
-/* 컨테이너 */
+
 .timeline-ui {
   display: flex;
   flex-direction: column;
@@ -378,12 +159,14 @@ body {
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  transition: box-shadow .15s ease, transform .05s ease;
+  transition: box-shadow 0.15s ease, transform 0.05s ease;
   white-space: nowrap;
 }
-.day-tab:hover { box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+.day-tab:hover {
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
 .day-tab.active {
-  background: #4f8cff; /* 메인 포인트색 */
+  background: #4f8cff;
   color: #fff;
   border-color: #4f8cff;
 }
@@ -407,7 +190,7 @@ body {
 }
 .tl-row {
   display: grid;
-  grid-template-columns: 32px 1fr; /* 왼쪽 레일 32, 오른쪽 카드 auto */
+  grid-template-columns: 32px 1fr;
   align-items: stretch;
   gap: 10px;
 }
@@ -434,7 +217,7 @@ body {
   border-radius: 50%;
   background: #fff;
   border: 3px solid #4f8cff;
-  box-shadow: 0 2px 6px rgba(0,0,0,.15);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
 /* 카드 */
@@ -443,7 +226,7 @@ body {
   border: 1px solid #eef1ff;
   border-radius: 18px;
   padding: 14px 16px;
-  box-shadow: 0 8px 24px rgba(79, 140, 255, .16);
+  box-shadow: 0 8px 24px rgba(79, 140, 255, 0.16);
 }
 
 /* 헤더 */
@@ -494,8 +277,117 @@ body {
   color: #2563eb;
 }
 
-/* 빈 상태 안내 */
-.timeline-empty {
-  font-size: 14px;
-  color: #6b7280;
+/* =========================
+   우선순위 버튼 (Priority)
+========================= */
+
+/* 더 납작한 우선순위 영역 */
+.priority-bar {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin: 0 0 4px;        /* 🔻 위·아래 여백 줄이기 */
+  padding: 1px 4px;       /* 🔻 안쪽 세로 여백도 최소 */
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  background: #f9fafb;
+}
+
+/* 버튼도 한 단계 작게 */
+.priority-bar button,
+.pill {
+  border: 1px solid #e2e6ff;
+  background: #fff;
+  border-radius: 999px;
+  padding: 3px 8px;       /* 🔻 세로 + 가로 둘 다 축소 */
+  font-size: 11px;
+  color: #4b5563;
+  cursor: default;
+  white-space: nowrap;
+}
+
+
+/* =========================
+   지도 커스텀 마커 / 툴팁
+========================= */
+
+/* Emoji Marker */
+.emoji-pin {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid #33333322;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  display: grid;
+  place-items: center;
+  font-size: 20px;
+  line-height: 1;
+  user-select: none;
+  transform: translate(-50%, -100%);
+}
+.emoji-pin:hover {
+  transform: translate(-50%, -100%) scale(1.06);
+}
+
+/* 지도 툴팁 */
+.map-tooltip {
+  font-size: 12px;
+  line-height: 1.4;
+  padding: 6px 8px;
+  color: #111827;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+  max-width: 240px;
+  white-space: pre-wrap;
+}
+.map-tooltip .title {
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.map-tooltip .addr {
+  color: #4b5563;
+}
+
+/* =========================
+   모바일 / 태블릿 레이아웃
+   - 지도 → 타임라인 → 챗봇
+   - 전체 스크롤 허용
+========================= */
+
+@media (max-width: 900px) {
+  .app-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 8px;
+    height: auto;
+  }
+
+  .map-panel,
+  .timeline-panel,
+  .chat-panel {
+    width: 100%;
+    max-width: none;
+    height: auto;
+  }
+
+  .map-panel {
+    order: 1;
+    height: 50vh;  /* 모바일에서 지도는 화면 절반 정도 */
+  }
+
+  .timeline-panel {
+    order: 2;
+  }
+
+  .chat-panel {
+    order: 3;
+  }
+
+  .map-panel > * {
+    height: 100%;
+  }
 }
